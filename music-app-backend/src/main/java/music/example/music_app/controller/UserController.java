@@ -52,5 +52,10 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    
+    // User login method
+    @PostMapping("/login")
+    public User loginUser(String email, String password) {
+        return userService.login(email, password);
+    }
 }
+
