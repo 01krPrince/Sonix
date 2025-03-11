@@ -1,6 +1,6 @@
 package music.example.music_app.service;
 
-import music.example.music_app.model.AddSongRequest;
+import music.example.music_app.model.request.AddSongRequest;
 import music.example.music_app.model.Song;
 
 import java.util.List;

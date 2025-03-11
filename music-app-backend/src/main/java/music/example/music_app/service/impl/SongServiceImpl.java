@@ -1,7 +1,7 @@
 package music.example.music_app.service.impl;
 
 import music.example.music_app.exception.ResourceNotFoundException;
-import music.example.music_app.model.AddSongRequest;
+import music.example.music_app.model.request.AddSongRequest;
 import music.example.music_app.model.Song;
 import music.example.music_app.repository.SongRepository;
 import music.example.music_app.service.SongService;

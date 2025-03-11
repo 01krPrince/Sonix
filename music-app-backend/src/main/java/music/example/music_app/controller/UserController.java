@@ -1,6 +1,7 @@
 package music.example.music_app.controller;
 
 import music.example.music_app.model.User;
+import music.example.music_app.model.request.UserRequest;
 import music.example.music_app.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin("*")
 public class UserController {
 
     private final UserService userService;
@@ -33,8 +35,8 @@ public class UserController {
 
     // Create a new user
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        return ResponseEntity.ok(userService.createUser(user));
+    public ResponseEntity<User> createUser(@RequestBody UserRequest userRequest) {
+        return ResponseEntity.ok(userService.createUser(userRequest));
     }
 
     // Update an existing user
@@ -49,4 +51,6 @@ public class UserController {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
+
+    
 }

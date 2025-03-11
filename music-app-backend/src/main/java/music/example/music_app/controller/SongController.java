@@ -1,6 +1,6 @@
 package music.example.music_app.controller;
 
-import music.example.music_app.model.AddSongRequest;
+import music.example.music_app.model.request.AddSongRequest;
 import music.example.music_app.model.Song;
 import music.example.music_app.service.SongService;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/songs")
+@CrossOrigin("*")
 public class SongController {
 
     private final SongService songService;
