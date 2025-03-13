@@ -34,13 +34,52 @@ const User = mongoose.model('User', userSchema);
 
 // Enable CORS for all routes
 app.use(cors({
-    origin: 'http://127.0.0.1:5500',
+    origin: ['http://127.0.0.1:5500', 'http://localhost:5500'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Accept']
+    allowedHeaders: ['Content-Type', 'Accept', 'Authorization']
 }));
 
 // Parse JSON bodies
 app.use(express.json());
+
+// Login endpoint
+app.post('/api/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        // Basic validation
+        if (!email || !password) {
+            return res.status(400).json({ message: 'Email and password are required' });
+        }
+
+        // Find user by email
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(401).json({ message: 'Invalid email or password' });
+        }
+
+        // Verify password
+        const isValidPassword = await comparePassword(password, user.password);
+        if (!isValidPassword) {
+            return res.status(401).json({ message: 'Invalid email or password' });
+        }
+
+        // Generate JWT token
+        const token = generateToken(user);
+
+        // Return user data with token
+        res.json({
+            token,
+            userId: user._id,
+            username: user.username,
+            email: user.email,
+            playlist: user.playlist
+        });
+    } catch (error) {
+        console.error('Login error:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
 
 // User registration endpoint
 app.post('/api/users', async (req, res) => {
