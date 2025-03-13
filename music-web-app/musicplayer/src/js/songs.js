@@ -1,73 +1,67 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Sample song data - in a real app, this would come from an API
-    const songs = [
-        {
-            title: 'Blinding Lights',
-            artist: 'The Weeknd',
-            cover: 'https://i.scdn.co/image/ab67616d00004851ed0015021adb8c73654d4886'
-        },
-        {
-            title: 'Levitating',
-            artist: 'Dua Lipa',
-            cover: 'https://i.scdn.co/image/ab67616d00004851019e34651a4c685f2bce37a9'
-        },
-        {
-            title: 'Stay With Me',
-            artist: 'Sam Smith',
-            cover: 'https://i.scdn.co/image/ab67616d00004851d9194aa18fa4c9362b47464f'
-        },
-        {
-            title: 'Circles',
-            artist: 'Post Malone',
-            cover: 'https://i.scdn.co/image/ab67616d0000485113f2466b83507515291acce4'
+// Fetch songs from the API and display them
+async function fetchSongs() {
+    document.getElementById('loading').classList.remove('hidden'); // Show loading
+    try {
+        const response = await fetch('https://sonix-s830.onrender.com/api/songs'); // Updated API URL
+        if (!response.ok) {
+            throw new Error('Failed to fetch songs');
         }
-    ];
 
-    const songsList = document.getElementById('songsList');
-    const template = document.getElementById('song-card-template');
-    const searchInput = document.getElementById('searchInput');
-
-    // Function to create song cards
-    function createSongCard(song) {
-        const clone = template.content.cloneNode(true);
-        
-        const img = clone.querySelector('img');
-        const title = clone.querySelector('.song-title');
-        const artist = clone.querySelector('.artist-name');
-        
-        img.src = song.cover;
-        img.alt = `${song.title} cover`;
-        title.textContent = song.title;
-        artist.textContent = song.artist;
-
-        const playBtn = clone.querySelector('.play-btn');
-        playBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            // Add play functionality here
-            console.log(`Playing ${song.title}`);
-        });
-
-        return clone;
+        const songs = await response.json();
+        displaySongs(songs);
+    } catch (error) {
+        console.error('Error fetching songs:', error);
+        document.getElementById('message').textContent = 'Failed to load songs. Please try again later.';
+    } finally {
+        document.getElementById('loading').classList.add('hidden'); // Hide loading
     }
+}
 
-    // Initial render of all songs
-    function renderSongs(songsToRender) {
-        songsList.innerHTML = '';
-        songsToRender.forEach(song => {
-            songsList.appendChild(createSongCard(song));
-        });
-    }
+// Display songs dynamically
+function displaySongs(songs) {
+    const songList = document.getElementById('songsList');
 
-    // Search functionality
-    searchInput.addEventListener('input', (e) => {
-        const searchTerm = e.target.value.toLowerCase();
-        const filteredSongs = songs.filter(song => 
-            song.title.toLowerCase().includes(searchTerm) ||
-            song.artist.toLowerCase().includes(searchTerm)
-        );
-        renderSongs(filteredSongs);
+    // Clear previous songs
+    songList.innerHTML = '';
+
+    songs.forEach(song => {
+        const songItem = document.createElement('div');
+        songItem.className = 'bg-white/5 backdrop-blur-lg rounded-xl overflow-hidden hover:bg-white/10 transition-all duration-300 group p-4';
+
+        songItem.innerHTML = `
+            <div class="relative">
+                <img src="${song.previewImg}" alt="${song.title}" class="w-full h-40 aspect-square object-cover">
+                <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button class="bg-purple-500 text-white p-4 rounded-full hover:bg-purple-600 transform hover:scale-110 transition-all" onclick="playSong('${song.songUrl}')">
+                        <i class="fas fa-play"></i>
+                    </button>
+                </div>
+            </div>
+            <h2 class="text-lg font-bold truncate">${song.title}</h2>
+            <p class="text-gray-400 text-sm truncate mb-2">${song.artistName}</p>
+            <div class="flex items-center justify-between">
+                <span class="text-xs px-2 py-1 bg-purple-500/20 text-purple-400 rounded-full">${song.genre}</span>
+                <div class="flex gap-3">
+                    <button class="text-gray-400 hover:text-purple-500 transition">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                    <button class="text-gray-400 hover:text-purple-500 transition">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+
+        songList.appendChild(songItem);
     });
+}
 
-    // Initial render
-    renderSongs(songs);
-});
+// Function to play a song
+function playSong(url) {
+    const audioPlayer = document.getElementById('audio-player');
+    audioPlayer.src = url;
+    audioPlayer.play();
+}
+
+// Call fetchSongs when the page loads
+document.addEventListener('DOMContentLoaded', fetchSongs);

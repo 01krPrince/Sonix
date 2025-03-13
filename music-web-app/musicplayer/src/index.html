@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="js/auth.js"></script>
     <script src="js/playlist.js"></script>
+    <script src="js/songs.js" defer></script>
     <style>
         .hide-scrollbar::-webkit-scrollbar {
             display: none;
@@ -39,9 +40,8 @@
                     class="border border-purple-500 px-6 py-2 rounded-full hover:bg-purple-500/20 transition">
                     Sign Up
                 </a>
-                <!-- User's profile with dynamic username -->
-                <div id="userProfile" class="flex items-center gap-4 hidden hover:text-purple-500">
-                    <span id="usernameDisplay" class="text-white font-semibold"></span>
+                <div id="userProfile" class="flex items-center gap-4 hidden hover:text-purple-500 cursor-pointer">
+                    <span id="usernameDisplay" class="hover:text-purple-500"></span>
                     |
                     <a href="profile.html" id="profileBtn" class="text-2xl hover:text-purple-500 transition">
                         <i class="fas fa-user-circle"></i>
@@ -53,7 +53,6 @@
 
     <div id="message" class="text-center mt-4"></div>
     <div class="container px-6 mt-2 flex gap-6 mx-auto py-16">
-        <!-- Sidebar with proper structure -->
         <div class="w-60 hidden lg:block h-[80vh] py-2.5 px-1.5">
             <div class="container">
                 <div class="relative">
@@ -116,36 +115,9 @@
         </div>
 
         <div class="flex-1 mt-3 h-[80vh] overflow-y-auto hide-scrollbar">
+            <div id="loading" class="text-center mt-4 hidden">Loading songs...</div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" id="songsList">
-                <!-- Updated song card design -->
-                <div
-                    class="bg-white/5 backdrop-blur-lg rounded-xl overflow-hidden hover:bg-white/10 transition-all duration-300 group">
-                    <div class="relative">
-                        <img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619394/rxzqgq6uydff7mflcdos.jpg" alt="Album Art" class="w-[100%] h-40 aspect-square object-cover">
-                        <div
-                            class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                            <button
-                                class="bg-purple-500 text-white p-4 rounded-full hover:bg-purple-600 transform hover:scale-110 transition-all">
-                                <i class="fas fa-play"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <h2 class="text-lg font-bold truncate">Another Song</h2>
-                        <p class="text-gray-400 text-sm truncate mb-2">Another Artist</p>
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs px-2 py-1 bg-purple-500/20 text-purple-400 rounded-full">Pop</span>
-                            <div class="flex gap-3">
-                                <button class="text-gray-400 hover:text-purple-500 transition">
-                                    <i class="fas fa-heart"></i>
-                                </button>
-                                <button class="text-gray-400 hover:text-purple-500 transition">
-                                    <i class="fas fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- Songs will be dynamically inserted here -->
             </div>
         </div>
     </div>
