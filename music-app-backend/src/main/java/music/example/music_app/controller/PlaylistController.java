@@ -1,6 +1,7 @@
 package music.example.music_app.controller;
 
 import music.example.music_app.model.Playlist;
+import music.example.music_app.model.request.CreatePlaylistRequest;
 import music.example.music_app.service.PlaylistService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,8 +42,8 @@ public class PlaylistController {
 
     // Create a new playlist
     @PostMapping
-    public ResponseEntity<Playlist> createPlaylist(@RequestBody Playlist playlist) {
-        return ResponseEntity.ok(playlistService.createPlaylist(playlist));
+    public ResponseEntity<Playlist> createPlaylist(@RequestBody CreatePlaylistRequest createPlaylistRequest) {
+        return ResponseEntity.ok(playlistService.createPlaylist(createPlaylistRequest));
     }
 
     // Update an existing playlist

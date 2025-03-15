@@ -1,6 +1,7 @@
 package music.example.music_app.service.impl;
 
 import music.example.music_app.model.Playlist;
+import music.example.music_app.model.request.CreatePlaylistRequest;
 import music.example.music_app.repository.PlaylistRepository;
 import music.example.music_app.service.PlaylistService;
 import org.springframework.stereotype.Service;
@@ -37,8 +38,18 @@ public class PlaylistServiceImpl implements PlaylistService {
 
     // Create a new playlist
     @Override
-    public Playlist createPlaylist(Playlist playlist) {
-        return playlistRepository.save(playlist);
+    public Playlist createPlaylist(CreatePlaylistRequest createPlaylistRequest) {
+        Playlist existingPlaylist = playlistRepository.findByPlaylistName(createPlaylistRequest.getPlaylistName().trim());
+
+        if (existingPlaylist != null) {
+            throw new RuntimeException("Playlist already exists with name: " + createPlaylistRequest.getPlaylistName());
+        }
+
+        Playlist newPlaylist = new Playlist();
+        newPlaylist.setPlaylistName(createPlaylistRequest.getPlaylistName().trim());
+        newPlaylist.setUserId(createPlaylistRequest.getUserId());
+
+        return playlistRepository.save(newPlaylist);
     }
 
     // Update existing playlist

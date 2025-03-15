@@ -38,7 +38,7 @@ class Auth {
     }
 
     getCurrentUser() {
-        const userData = localStorage.getItem('user');
+        const userData = sessionStorage.getItem('user');
         return userData ? JSON.parse(userData) : null;
     }
 
@@ -58,7 +58,7 @@ class Auth {
                         username: email.split('@')[0],
                         profilePic: 'profile.jpg'
                     };
-                    localStorage.setItem('user', JSON.stringify(user));
+                    sessionStorage.setItem('user', JSON.stringify(user));
                     this.checkAuthState();
                     resolve(user);
                 } else {
@@ -77,7 +77,7 @@ class Auth {
                         username: email.split('@')[0],
                         profilePic: 'profile.jpg'
                     };
-                    localStorage.setItem('user', JSON.stringify(user));
+                    sessionStorage.setItem('user', JSON.stringify(user));
                     this.checkAuthState();
                     resolve(user);
                 } else {
@@ -88,7 +88,7 @@ class Auth {
     }
 
     logout() {
-        localStorage.removeItem('user');
+        sessionStorage.removeItem('user');
         this.checkAuthState();
         window.location.href = 'index.html';
     }
