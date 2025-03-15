@@ -9,7 +9,6 @@
 </head>
     <script src="js/profile.js" defer></script>
 <body class="dark:bg-gray-900 dark:text-white bg-gray-50 text-gray-900 transition-colors duration-200">
-    <!-- Navigation Bar (Same as index.html) -->
     <nav class="dark:bg-black/40 bg-white/80 backdrop-blur-md fixed top-0 w-full z-50 border-b dark:border-gray-800 border-gray-200">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-2">
@@ -35,9 +34,7 @@
         </div>
     </nav>
 
-    <!-- Profile Content -->
     <div class="container mx-auto px-6 mt-24">
-        <!-- Profile Header -->
         <div class="bg-white dark:bg-gray-800 rounded-xl p-6 mb-6">
             <div class="flex items-center gap-6">
                 <div class="relative group">
@@ -54,66 +51,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Stats Section -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            <div class="bg-white dark:bg-gray-800 rounded-xl p-6">
-                <h3 class="text-lg font-semibold mb-2">Playlists</h3>
-                <p class="text-3xl font-bold text-primary-dark">12</p>
-            </div>
-            <div class="bg-white dark:bg-gray-800 rounded-xl p-6">
-                <h3 class="text-lg font-semibold mb-2">Favorite Songs</h3>
-                <p class="text-3xl font-bold text-primary-dark">148</p>
-            </div>
-            <div class="bg-white dark:bg-gray-800 rounded-xl p-6">
-                <h3 class="text-lg font-semibold mb-2">Following</h3>
-                <p class="text-3xl font-bold text-primary-dark">45</p>
-            </div>
-        </div>
-
-        <!-- My Playlists -->
-        <div class="mb-6">
-            <h2 class="text-2xl font-bold mb-4">My Playlists</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden group">
-                    <div class="relative">
-                        <img src="https://via.placeholder.com/300" alt="Playlist Cover" 
-                             class="w-full aspect-square object-cover">
-                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
-                            <button class="bg-primary-dark text-white px-6 py-2 rounded-full">
-                                <i class="fas fa-play mr-2"></i>Play
-                            </button>
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-bold">Favorite Mix</h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">32 songs</p>
-                    </div>
-                </div>
-                <!-- Add more playlist cards here -->
-            </div>
-        </div>
-
-        <!-- Recently Played -->
-        <div>
-            <h2 class="text-2xl font-bold mb-4">Recently Played</h2>
-            <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden">
-                <div class="divide-y dark:divide-gray-700">
-                    <div class="flex items-center gap-4 p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition">
-                        <img src="https://via.placeholder.com/60" alt="Song Cover" 
-                             class="w-12 h-12 rounded object-cover">
-                        <div class="flex-1">
-                            <h3 class="font-semibold">Song Title</h3>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">Artist Name</p>
-                        </div>
-                        <button class="text-gray-500 hover:text-primary-dark">
-                            <i class="fas fa-play"></i>
-                        </button>
-                    </div>
-                    <!-- Add more recently played songs here -->
-                </div>
-            </div>
-        </div>
     </div>
 
     <script src="js/auth.js"></script>
@@ -124,8 +61,9 @@
             document.documentElement.classList.toggle('dark');
         });
 
-        // Load user data
-        const userData = JSON.parse(localStorage.getItem('user'));
+        // Load user data from session storage
+        // const userData = JSON.parse(sessionStorage.getItem('user'));
+        const userData = localStorage.getItem('user');
         if (userData) {
             document.getElementById('username').textContent = userData.username;
             document.getElementById('userEmail').textContent = userData.email;

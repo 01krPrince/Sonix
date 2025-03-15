@@ -22,12 +22,13 @@
     </style>
 </head>
 
-<body class="bg-gradient-to-b from-gray-900 to-black text-white min-h-screen">
+<body class="bg-gradient-to-b from-gray-900 to-black text-white max-h-screen">
     <nav class="bg-black/40 backdrop-blur-md fixed top-0 w-full z-50 border-b border-gray-800">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-2">
                 <i class="fas fa-music text-2xl text-purple-500"></i>
-                <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
+                <h1
+                    class="text-2xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
                     Sonix
                 </h1>
             </div>
@@ -40,20 +41,21 @@
                     class="border border-purple-500 px-6 py-2 rounded-full hover:bg-purple-500/20 transition">
                     Sign Up
                 </a>
-                <div id="userProfile" class="flex items-center gap-4 hidden hover:text-purple-500 cursor-pointer">
-                    <span id="usernameDisplay" class="hover:text-purple-500"></span>
-                    |
-                    <a href="profile.html" id="profileBtn" class="text-2xl hover:text-purple-500 transition">
-                        <i class="fas fa-user-circle"></i>
-                    </a>
-                </div>
+                <a href="profile.html">
+                    <div id="userProfile" class="flex items-center gap-4 hidden hover:text-purple-500 cursor-pointer">
+                        <span id="usernameDisplay" class="hover:text-purple-500"></span>
+                        |
+                        <a href="profile.html" id="profileBtn" class="text-2xl hover:text-purple-500 transition">
+                            <i class="fas fa-user-circle"></i>
+                        </a>
+                    </div>
+                </a>
             </div>
         </div>
     </nav>
 
-    <div id="message" class="text-center mt-4"></div>
-    <div class="container px-6 mt-2 flex gap-6 mx-auto py-16">
-        <div class="w-60 hidden lg:block h-[80vh] py-2.5 px-1.5">
+    <div class="container px-6 mt-2 flex gap-6 mx-auto pt-16 mb-2 ">
+        <div class="w-60 hidden lg:block py-2.5 px-1.5 max-h-[40vh]">
             <div class="container">
                 <div class="relative">
                     <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
@@ -78,7 +80,7 @@
                 <div class="justify-between flex items-center text-xl font-bold mb-4">
                     <h2>Your Playlists</h2>
                 </div>
-                <div class="overflow-y-auto hide-scrollbar h-[65vh]">
+                <div class="">
                     <div class="mb-4">
                         <button
                             class="flex items-center justify-between w-full p-3 rounded-lg hover:bg-white/10 transition"
@@ -89,7 +91,7 @@
                             </div>
                             <i class="fas fa-chevron-down transition" id="playlist1-icon"></i>
                         </button>
-                        <div class="hidden pl-4 mt-2 space-y-2" id="playlist1">
+                        <div class="hidden pl-4 mt-2 space-y-2 overflow-y-auto h-96 hide-scrollbar" id="playlist1">
                             <div
                                 class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-pointer">
                                 <img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
@@ -98,7 +100,111 @@
                                     <p class="font-medium">Blinding Lights</p>
                                     <p class="text-sm text-gray-400">The Weeknd</p>
                                 </div>
+                            </div> <div
+                            class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-pointer">
+                            <img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
+                                class="w-10 h-10 rounded" alt="Song cover">
+                            <div>
+                                <p class="font-medium">Blinding Lights</p>
+                                <p class="text-sm text-gray-400">The Weeknd</p>
                             </div>
+                        </div> <div
+                        class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-pointer">
+                        <img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
+                            class="w-10 h-10 rounded" alt="Song cover">
+                        <div>
+                            <p class="font-medium">Blinding Lights</p>
+                            <p class="text-sm text-gray-400">The Weeknd</p>
+                        </div>
+                    </div> <div
+                    class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-pointer">
+                    <img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
+                        class="w-10 h-10 rounded" alt="Song cover">
+                    <div>
+                        <p class="font-medium">Blinding Lights</p>
+                        <p class="text-sm text-gray-400">The Weeknd</p>
+                    </div>
+                </div> <div
+                class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-pointer">
+                <img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
+                    class="w-10 h-10 rounded" alt="Song cover">
+                <div>
+                    <p class="font-medium">Blinding Lights</p>
+                    <p class="text-sm text-gray-400">The Weeknd</p>
+                </div>
+            </div> <div
+            class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-pointer">
+            <img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
+                class="w-10 h-10 rounded" alt="Song cover">
+            <div>
+                <p class="font-medium">Blinding Lights</p>
+                <p class="text-sm text-gray-400">The Weeknd</p>
+            </div>
+        </div> <div
+        class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-pointer">
+        <img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
+            class="w-10 h-10 rounded" alt="Song cover">
+        <div>
+            <p class="font-medium">Blinding Lights</p>
+            <p class="text-sm text-gray-400">The Weeknd</p>
+        </div>
+    </div> <div
+    class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-pointer">
+    <img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
+        class="w-10 h-10 rounded" alt="Song cover">
+    <div>
+        <p class="font-medium">Blinding Lights</p>
+        <p class="text-sm text-gray-400">The Weeknd</p>
+    </div>
+</div> <div
+class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-pointer">
+<img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
+    class="w-10 h-10 rounded" alt="Song cover">
+<div>
+    <p class="font-medium">Blinding Lights</p>
+    <p class="text-sm text-gray-400">The Weeknd</p>
+</div>
+</div> <div
+class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-pointer">
+<img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
+    class="w-10 h-10 rounded" alt="Song cover">
+<div>
+    <p class="font-medium">Blinding Lights</p>
+    <p class="text-sm text-gray-400">The Weeknd</p>
+</div>
+</div> <div
+class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-pointer">
+<img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
+    class="w-10 h-10 rounded" alt="Song cover">
+<div>
+    <p class="font-medium">Blinding Lights</p>
+    <p class="text-sm text-gray-400">The Weeknd</p>
+</div>
+</div> <div
+class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-pointer">
+<img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
+    class="w-10 h-10 rounded" alt="Song cover">
+<div>
+    <p class="font-medium">Blinding Lights</p>
+    <p class="text-sm text-gray-400">The Weeknd</p>
+</div>
+</div> <div
+class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-pointer">
+<img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
+    class="w-10 h-10 rounded" alt="Song cover">
+<div>
+    <p class="font-medium">Blinding Lights</p>
+    <p class="text-sm text-gray-400">The Weeknd</p>
+</div>
+</div> <div
+class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-pointer">
+<img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
+    class="w-10 h-10 rounded" alt="Song cover">
+<div>
+    <p class="font-medium">Blinding Lights</p>
+    <p class="text-sm text-gray-400">The Weeknd</p>
+</div>
+</div>
                             <div
                                 class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-pointer">
                                 <img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
@@ -113,20 +219,20 @@
                 </div>
             </div>
         </div>
-
-        <div class="flex-1 mt-3 h-[80vh] overflow-y-auto hide-scrollbar">
+        <!-- All Songs -->
+        <div class="flex-1 mt-3 h-[77vh] overflow-y-auto hide-scrollbar">
             <div id="loading" class="text-center mt-4 hidden">Loading songs...</div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" id="songsList">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 " id="songsList">
                 <!-- Songs will be dynamically inserted here -->
             </div>
         </div>
     </div>
     <div class="sticky bottom-0 left-0 right-0 bg-black/90 backdrop-blur-md border-t border-gray-800">
-        <div class="container mx-auto px-6 py-4">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="container mx-auto px-6 py-0">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4 max-w-[80%]">
                 <div class="flex items-center gap-4 w-full md:w-1/4">
-                    <img id="currentSongImg" src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
-                        class="w-16 h-16 rounded-lg object-cover" alt="Album Art">
+                    <img id="currentSongImg" src="assets/default-song-preview.png"
+                        class="w-16 rounded-lg object-cover" alt="Album Art">
                     <div>
                         <h3 id="currentSongTitle" class="font-bold truncate">No song playing</h3>
                         <p id="currentArtist" class="text-gray-400 text-sm truncate">-</p>
@@ -134,30 +240,13 @@
                 </div>
                 <div class="flex flex-col items-center w-2/4">
                     <div class="flex items-center gap-6">
-                        <button id="prevBtn" class="text-2xl hover:text-purple-500 transition">
-                            <i class="fas fa-step-backward"></i>
-                        </button>
-                        <button id="playPauseBtn" class="text-4xl hover:text-purple-500 transition">
-                            <i class="fas fa-play"></i>
-                        </button>
-                        <button id="nextBtn" class="text-2xl hover:text-purple-500 transition">
-                            <i class="fas fa-step-forward"></i>
-                        </button>
-                        <button id="loopBtn" class="text-2xl hover:text-purple-500 transition">
-                            <i class="fas fa-redo"></i>
-                        </button>
+                        <div class="text-center shadow-lg w-[75vw] bg-black p-4 rounded-lg">
+                            <audio id="current-song" autoplay controls class="w-full custom-audio">
+                                <source src="" type="audio/mpeg">
+                            </audio>
+                        </div>
                     </div>
-                    <div class="w-full mt-2">
-                        <input type="range" id="progressBar"
-                            class="w-full h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-purple-500"
-                            min="0" max="100" value="0">
-                    </div>
-                </div>
-                <div class="w-1/4 text-right">
-                    <button id="volumeBtn" class="text-2xl hover:text-purple-500 transition">
-                        <i class="fas fa-volume-up"></i>
-                    </button>
-                </div>
+                </div>   
             </div>
         </div>
     </div>
