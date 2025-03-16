@@ -57,5 +57,6 @@ public class UserController {
     public User loginUser(String email, String password) {
         return userService.login(email, password);
     }
+
 }
 

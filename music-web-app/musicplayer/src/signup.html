@@ -90,23 +90,20 @@
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
+            const messageElement = document.getElementById('message');
 
-            // Check if the passwords match
             if (password !== confirmPassword) {
-                document.getElementById('message').textContent = "Passwords do not match!";
-                document.getElementById('message').classList.add("text-red-500");
+                messageElement.textContent = "Passwords do not match!";
+                messageElement.classList.add("text-red-500");
                 return;
             }
 
-            // Prepare the data to send to the server
             const data = {
                 username: username,
                 email: email,
-                password: password,
-                playlist: []  // Initialize an empty playlist for the user
+                password: password
             };
 
-            // Send the request to the backend API
             fetch('https://sonix-s830.onrender.com/api/users', {
                 method: 'POST',
                 headers: {
@@ -117,19 +114,23 @@
             .then(response => response.json())
             .then(data => {
                 if (data.error) {
-                    // If the API returns an error, display the message
-                    document.getElementById('message').textContent = data.message;
-                    document.getElementById('message').classList.add("text-red-500");
+                    messageElement.textContent = data.message;
+                    messageElement.classList.add("text-red-500");
                 } else {
-                    // If successful, store user data in sessionStorage and redirect
-                    sessionStorage.setItem('user', JSON.stringify(data));
-                    window.location.href = 'index.html';  // Redirect to home page
+                    // Store user data including the ID
+                    const userData = {
+                        id: data.id,
+                        username: data.username,
+                        email: data.email,
+                        token: data.token
+                    };
+                    sessionStorage.setItem('user', JSON.stringify(userData));
+                    window.location.href = 'index.html';
                 }
             })
             .catch(error => {
-                // If an error occurs during the fetch request
-                document.getElementById('message').textContent = "An error occurred. Please try again.";
-                document.getElementById('message').classList.add("text-red-500");
+                messageElement.textContent = "An error occurred. Please try again.";
+                messageElement.classList.add("text-red-500");
             });
         });
     </script>

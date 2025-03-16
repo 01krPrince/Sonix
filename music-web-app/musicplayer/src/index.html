@@ -61,35 +61,31 @@
                     <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
                     <input type="text" id="searchInput" placeholder="Search..."
                         title="Search by title, artist, album and genre..."
-                        class="w-full p-2 pl-10 rounded-full bg-gray-800/50 text-white border border-gray-700 focus:border-purple-500 focus:outline-none">
+                        class="w-full rounded-lg p-2 pl-10 bg-gray-800/50 text-white border border-gray-700 focus:border-purple-500 focus:outline-none">
                 </div>
             </div>
-            <div class="justify-between flex items-center text-lg font-bold mb-4 px-5 mt-1"
-                onclick="togglePlaylist('newplaylist')">
-                <h2>New Playlists</h2>
-                <button class="hover:text-purple-500 transition" title="Add new playlist">
-                    <i class="fas fa-plus"></i>
-                </button>
+            <div id="createPlaylist"
+                class="justify-between flex items-center text-lg font-bold mb-4 px-5 mt-1 hover:text-purple-500 transition cursor-pointer"
+                title="Add new playlist">
+                <h2>Create Playlist</h2>
+                <i class="fas fa-plus"></i>
             </div>
-            <div class="hidden pl-4 mt-2 space-y-2" id="newplaylist">
-                <div>
-                    <input type="text">
-                </div>
+            <div class="hidden pl-4 mt-2 space-y-2 z-20 " id="newPlaylist">
+                <input type="text" class="bg-gray-800 px-2" required placeholder="Playlist name...">
             </div>
             <div class="bg-white/5 backdrop-blur-lg rounded-xl p-4 mt-4">
                 <div class="justify-between flex items-center text-xl font-bold mb-4">
-                    <h2>Your Playlists</h2>
+                    <!-- <h2>Your Playlists</h2> -->
                 </div>
-                <div class="">
+                <!-- <div class=""> -->
                     <div class="mb-4">
                         <button
-                            class="flex items-center justify-between w-full p-3 rounded-lg hover:bg-white/10 transition"
-                            onclick="togglePlaylist('playlist1')">
+                            class="flex items-center justify-between w-full p-3 rounded-lg hover:bg-white/10 transition">
                             <div class="flex items-center gap-3">
                                 <i class="fas fa-heart text-purple-500"></i>
                                 <span>Favorites</span>
                             </div>
-                            <i class="fas fa-chevron-down transition" id="playlist1-icon"></i>
+
                         </button>
                         <div class="hidden pl-4 mt-2 space-y-2 overflow-y-auto h-96 hide-scrollbar" id="playlist1">
                             <div
@@ -100,126 +96,12 @@
                                     <p class="font-medium">Blinding Lights</p>
                                     <p class="text-sm text-gray-400">The Weeknd</p>
                                 </div>
-                            </div> <div
-                            class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-pointer">
-                            <img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
-                                class="w-10 h-10 rounded" alt="Song cover">
-                            <div>
-                                <p class="font-medium">Blinding Lights</p>
-                                <p class="text-sm text-gray-400">The Weeknd</p>
-                            </div>
-                        </div> <div
-                        class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-pointer">
-                        <img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
-                            class="w-10 h-10 rounded" alt="Song cover">
-                        <div>
-                            <p class="font-medium">Blinding Lights</p>
-                            <p class="text-sm text-gray-400">The Weeknd</p>
-                        </div>
-                    </div> <div
-                    class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-pointer">
-                    <img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
-                        class="w-10 h-10 rounded" alt="Song cover">
-                    <div>
-                        <p class="font-medium">Blinding Lights</p>
-                        <p class="text-sm text-gray-400">The Weeknd</p>
-                    </div>
-                </div> <div
-                class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-pointer">
-                <img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
-                    class="w-10 h-10 rounded" alt="Song cover">
-                <div>
-                    <p class="font-medium">Blinding Lights</p>
-                    <p class="text-sm text-gray-400">The Weeknd</p>
-                </div>
-            </div> <div
-            class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-pointer">
-            <img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
-                class="w-10 h-10 rounded" alt="Song cover">
-            <div>
-                <p class="font-medium">Blinding Lights</p>
-                <p class="text-sm text-gray-400">The Weeknd</p>
-            </div>
-        </div> <div
-        class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-pointer">
-        <img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
-            class="w-10 h-10 rounded" alt="Song cover">
-        <div>
-            <p class="font-medium">Blinding Lights</p>
-            <p class="text-sm text-gray-400">The Weeknd</p>
-        </div>
-    </div> <div
-    class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-pointer">
-    <img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
-        class="w-10 h-10 rounded" alt="Song cover">
-    <div>
-        <p class="font-medium">Blinding Lights</p>
-        <p class="text-sm text-gray-400">The Weeknd</p>
-    </div>
-</div> <div
-class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-pointer">
-<img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
-    class="w-10 h-10 rounded" alt="Song cover">
-<div>
-    <p class="font-medium">Blinding Lights</p>
-    <p class="text-sm text-gray-400">The Weeknd</p>
-</div>
-</div> <div
-class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-pointer">
-<img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
-    class="w-10 h-10 rounded" alt="Song cover">
-<div>
-    <p class="font-medium">Blinding Lights</p>
-    <p class="text-sm text-gray-400">The Weeknd</p>
-</div>
-</div> <div
-class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-pointer">
-<img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
-    class="w-10 h-10 rounded" alt="Song cover">
-<div>
-    <p class="font-medium">Blinding Lights</p>
-    <p class="text-sm text-gray-400">The Weeknd</p>
-</div>
-</div> <div
-class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-pointer">
-<img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
-    class="w-10 h-10 rounded" alt="Song cover">
-<div>
-    <p class="font-medium">Blinding Lights</p>
-    <p class="text-sm text-gray-400">The Weeknd</p>
-</div>
-</div> <div
-class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-pointer">
-<img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
-    class="w-10 h-10 rounded" alt="Song cover">
-<div>
-    <p class="font-medium">Blinding Lights</p>
-    <p class="text-sm text-gray-400">The Weeknd</p>
-</div>
-</div> <div
-class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-pointer">
-<img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
-    class="w-10 h-10 rounded" alt="Song cover">
-<div>
-    <p class="font-medium">Blinding Lights</p>
-    <p class="text-sm text-gray-400">The Weeknd</p>
-</div>
-</div>
-                            <div
-                                class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-pointer">
-                                <img src="https://res.cloudinary.com/cloudinarycloudstore/image/upload/v1741619624/lrqga6hwo1geglhuhqjt.jpg"
-                                    class="w-10 h-10 rounded" alt="Song cover">
-                                <div>
-                                    <p class="font-medium">Levitating</p>
-                                    <p class="text-sm text-gray-400">Dua Lipa</p>
-                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                <!-- </div> -->
             </div>
         </div>
-        <!-- All Songs -->
         <div class="flex-1 mt-3 h-[77vh] overflow-y-auto hide-scrollbar">
             <div id="loading" class="text-center mt-4 hidden">Loading songs...</div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 " id="songsList">
@@ -231,8 +113,8 @@ class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-p
         <div class="container mx-auto px-6 py-0">
             <div class="flex flex-col md:flex-row items-center justify-between gap-4 max-w-[80%]">
                 <div class="flex items-center gap-4 w-full md:w-1/4">
-                    <img id="currentSongImg" src="assets/default-song-preview.png"
-                        class="w-16 rounded-lg object-cover" alt="Album Art">
+                    <img id="currentSongImg" src="assets/default-song-preview.png" class="w-16 rounded-lg object-cover"
+                        alt="Album Art">
                     <div>
                         <h3 id="currentSongTitle" class="font-bold truncate">No song playing</h3>
                         <p id="currentArtist" class="text-gray-400 text-sm truncate">-</p>
@@ -246,43 +128,13 @@ class="flex items-center gap-3 p-2 rounded hover:bg-white/10 transition cursor-p
                             </audio>
                         </div>
                     </div>
-                </div>   
+                </div>
             </div>
         </div>
     </div>
-
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Check sessionStorage for user data
-            const user = JSON.parse(sessionStorage.getItem('user'));
-
-            // Grab the elements for login/signup and user profile
-            const loginBtn = document.getElementById('loginBtn');
-            const signupBtn = document.getElementById('signupBtn');
-            const userProfile = document.getElementById('userProfile');
-            const usernameDisplay = document.getElementById('usernameDisplay');
-
-            if (user) {
-                // User is logged in
-                loginBtn.style.display = 'none';
-                signupBtn.style.display = 'none';
-                userProfile.style.display = 'flex';
-                usernameDisplay.textContent = user.username;
-
-                // Logout functionality
-                const logoutBtn = document.getElementById('logoutBtn');
-                logoutBtn.addEventListener('click', function () {
-                    sessionStorage.removeItem('user'); // Remove the user data from sessionStorage
-                    window.location.href = 'login.html'; // Redirect to login page after logout
-                });
-            } else {
-                // User is not logged in
-                loginBtn.style.display = 'inline-block';
-                signupBtn.style.display = 'inline-block';
-                userProfile.style.display = 'none';
-            }
-        });
     </script>
+    <script src="js/app.js"></script>
 </body>
 
 </html>

@@ -1,6 +1,7 @@
 package music.example.music_app.service.impl;
 
 import music.example.music_app.exception.ResourceNotFoundException;
+import music.example.music_app.model.Playlist;
 import music.example.music_app.model.User;
 import music.example.music_app.model.request.UserRequest;
 import music.example.music_app.repository.UserRepository;
@@ -42,29 +43,40 @@ public class UserServiceImpl implements UserService {
         if (userRepository.existsByEmail(userRequest.getEmail())) {
             throw new IllegalArgumentException("User with this email already exists");
         }
+
         User newUser = new User();
         newUser.setUsername(userRequest.getUsername());
         newUser.setEmail(userRequest.getEmail());
         newUser.setPassword(userRequest.getPassword());
 
-        newUser.setPlaylist(new ArrayList<>());
+        Playlist favorites = new Playlist();
+        favorites.setPlaylistName("Favorites");
+        favorites.setPlaylistSongs(new ArrayList<>());
 
         return userRepository.save(newUser);
     }
+
 
 
     @Override
     public User updateUser(String id, User userDetails) {
         return userRepository.findById(id)
                 .map(existingUser -> {
-                    existingUser.setUsername(userDetails.getUsername());
-                    existingUser.setEmail(userDetails.getEmail());
-                    existingUser.setPassword(userDetails.getPassword());
-                    existingUser.setPlaylist(userDetails.getPlaylist());
+                    // Update only if the new value is not null
+                    if (userDetails.getUsername() != null) {
+                        existingUser.setUsername(userDetails.getUsername());
+                    }
+                    if (userDetails.getEmail() != null) {
+                        existingUser.setEmail(userDetails.getEmail());
+                    }
+                    if (userDetails.getPassword() != null) {
+                        existingUser.setPassword(userDetails.getPassword());
+                    }
                     return userRepository.save(existingUser);
                 })
-                .orElseThrow(() -> new ResourceNotFoundException("UserRequest not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
     }
+
 
     @Override
     public void deleteUser(String id) {

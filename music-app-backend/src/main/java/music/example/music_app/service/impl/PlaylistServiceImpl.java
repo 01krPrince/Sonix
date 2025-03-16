@@ -1,11 +1,13 @@
 package music.example.music_app.service.impl;
 
 import music.example.music_app.model.Playlist;
+import music.example.music_app.model.Song;
 import music.example.music_app.model.request.CreatePlaylistRequest;
 import music.example.music_app.repository.PlaylistRepository;
 import music.example.music_app.service.PlaylistService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,12 +56,42 @@ public class PlaylistServiceImpl implements PlaylistService {
 
     // Update existing playlist
     @Override
-    public Playlist updatePlaylist(String id, Playlist playlist) {
+    public Playlist addSongsInPlaylist(String id, Song song) {
+        // Find the playlist by its ID
         return playlistRepository.findById(id).map(existingPlaylist -> {
-            existingPlaylist.setPlaylistName(playlist.getPlaylistName());
+            // Add the song to the playlist
+            List<Song> playlistSongs = existingPlaylist.getPlaylistSongs();
+            if (playlistSongs == null) {
+                playlistSongs = new ArrayList<>();  // Initialize if null
+            }
+            playlistSongs.add(song);  // Add the new song
+            existingPlaylist.setPlaylistSongs(playlistSongs);  // Set the updated playlist
+
+            // Save and return the updated playlist
             return playlistRepository.save(existingPlaylist);
         }).orElseThrow(() -> new RuntimeException("Playlist not found with id: " + id));
     }
+
+    @Override
+    public Playlist deleteSongFromPlaylist(String playlistId, String songId) {
+        return playlistRepository.findById(playlistId).map(existingPlaylist -> {
+            // Get the list of songs in the playlist
+            List<Song> playlistSongs = existingPlaylist.getPlaylistSongs();
+
+            if (playlistSongs != null) {
+                // Remove the song with the given songId
+                playlistSongs.removeIf(song -> song.getId().equals(songId));  // Remove song by ID
+            }
+
+            // Update the playlist with the modified song list
+            existingPlaylist.setPlaylistSongs(playlistSongs);
+
+            // Save and return the updated playlist
+            return playlistRepository.save(existingPlaylist);
+        }).orElseThrow(() -> new RuntimeException("Playlist not found with id: " + playlistId));
+    }
+
+
 
     // Delete a playlist
     @Override

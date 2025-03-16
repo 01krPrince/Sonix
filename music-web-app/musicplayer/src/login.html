@@ -68,14 +68,13 @@
 
     <script>
         document.getElementById("loginForm").addEventListener("submit", async function(event) {
-            event.preventDefault(); // Prevent the default form submission behavior
+            event.preventDefault();
             
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
             const messageElement = document.getElementById("message");
             const loginButton = document.getElementById("loginButton");
             
-            // Disable the login button while waiting for the response
             loginButton.disabled = true;
             loginButton.textContent = "Logging in...";
 
@@ -88,60 +87,63 @@
                 });
 
                 const data = await response.json();
+                console.log('Login response:', data); // Debug log
 
                 if (response.ok) {
-                    // If the response is OK, check if username is null
                     if (data.username == null) {
                         messageElement.textContent = data.message || "Invalid email or password.";
                         messageElement.classList.remove("text-green-500");
                         messageElement.classList.add("text-red-500");
 
-                        // Reset the form after 4 seconds
                         setTimeout(() => {
-                            document.getElementById("loginForm").reset();  // Reset the form
-                            messageElement.textContent = "";  // Clear the message
-                            loginButton.disabled = false;  // Re-enable the login button
-                            loginButton.textContent = "Login";  // Reset button text
+                            document.getElementById("loginForm").reset();
+                            messageElement.textContent = "";
+                            loginButton.disabled = false;
+                            loginButton.textContent = "Login";
                         }, 4000);
                     } else {
-                        // Successful login
-                        sessionStorage.setItem('user', JSON.stringify(data));
+                        // Store user data including the ID
+                        const userData = {
+                            id: data.id || data._id || data.userId, // Try all possible ID fields
+                            username: data.username,
+                            email: data.email,
+                            token: data.token
+                        };
+                        console.log('Saving user data:', userData); // Debug log
+                        sessionStorage.setItem('user', JSON.stringify(userData));
+                        
                         messageElement.textContent = `Welcome, ${data.username}!`;
                         messageElement.classList.remove("text-red-500");
                         messageElement.classList.add("text-green-500");
 
-                        // Redirect to index.html after a short delay
                         setTimeout(() => {
                             window.location.href = 'index.html';
                         }, 1000);
                     }
                 } else {
-                    // Handle error (invalid email/password)
                     messageElement.textContent = data.message || "Invalid email or password";
                     messageElement.classList.remove("text-green-500");
                     messageElement.classList.add("text-red-500");
 
-                    // Reset the form and re-enable the login button after 4 seconds
                     setTimeout(() => {
-                        document.getElementById("loginForm").reset();  // Reset the form
-                        messageElement.textContent = "";  // Clear the message
-                        loginButton.disabled = false;  // Re-enable the login button
-                        loginButton.textContent = "Login";  // Reset button text
+                        document.getElementById("loginForm").reset();
+                        messageElement.textContent = "";
+                        loginButton.disabled = false;
+                        loginButton.textContent = "Login";
                     }, 4000);
                 }
             } catch (error) {
-                // Handle network error or any other issues
+                console.error('Login error:', error); // Debug log
                 messageElement.textContent = `Error: ${error.message}`;
                 messageElement.classList.remove("text-green-500");
                 messageElement.classList.add("text-red-500");
                 loginButton.textContent = "Login";
 
-                // Reset the form and re-enable the login button after 4 seconds
                 setTimeout(() => {
-                    document.getElementById("loginForm").reset();  // Reset the form
-                    messageElement.textContent = "";  // Clear the message
-                    loginButton.disabled = false;  // Re-enable the login button
-                    loginButton.textContent = "Login";  // Reset button text
+                    document.getElementById("loginForm").reset();
+                    messageElement.textContent = "";
+                    loginButton.disabled = false;
+                    loginButton.textContent = "Login";
                 }, 3000);
             }
         });
