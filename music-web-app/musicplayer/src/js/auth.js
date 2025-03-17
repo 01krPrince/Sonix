@@ -1,95 +1,34 @@
-class Auth {
-    constructor() {
-        this.checkAuthState();
-        this.setupLogoutHandler();
-    }
+document.addEventListener('DOMContentLoaded', function () {
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    console.log('Current user:', user);
 
-    checkAuthState() {
-        const user = this.getCurrentUser();
-        const loginBtn = document.getElementById('loginBtn');
-        const signupBtn = document.getElementById('signupBtn');
-        const profileBtn = document.getElementById('profileBtn');
+    const loginBtn = document.getElementById('loginBtn');
+    const signupBtn = document.getElementById('signupBtn');
+    const userProfile = document.getElementById('userProfile');
+    const usernameDisplay = document.getElementById('usernameDisplay');
 
-        if (user) {
-            // User is logged in
-            loginBtn.classList.add('hidden');
-            signupBtn.classList.add('hidden');
-            profileBtn.classList.remove('hidden');
-            
-            // Set profile picture in nav bar
-            const profilePic = profileBtn.querySelector('img');
-            profilePic.src = user.profilePic || 'profile.jpg';
-            profilePic.alt = user.username;
-            
-            // Set dropdown menu information
-            const dropdownProfilePic = document.getElementById('dropdownProfilePic');
-            const dropdownUsername = document.getElementById('dropdownUsername');
-            const dropdownEmail = document.getElementById('dropdownEmail');
-            
-            if (dropdownProfilePic) dropdownProfilePic.src = user.profilePic || 'profile.jpg';
-            if (dropdownUsername) dropdownUsername.textContent = user.username;
-            if (dropdownEmail) dropdownEmail.textContent = user.email;
-        } else {
-            // User is not logged in
-            loginBtn.classList.remove('hidden');
-            signupBtn.classList.remove('hidden');
-            profileBtn.classList.add('hidden');
-        }
-    }
+    if (user && user.id) {
+        console.log('User is logged in with ID:', user.id);
+        loginBtn.style.display = 'none';
+        signupBtn.style.display = 'none';
+        userProfile.style.display = 'flex';
+        usernameDisplay.textContent = user.username;
 
-    getCurrentUser() {
-        const userData = sessionStorage.getItem('user');
-        return userData ? JSON.parse(userData) : null;
-    }
+        fetchUserPlaylists(user.id);
 
-    setupLogoutHandler() {
         const logoutBtn = document.getElementById('logoutBtn');
         if (logoutBtn) {
-            logoutBtn.addEventListener('click', () => this.logout());
+            logoutBtn.addEventListener('click', function () {
+                sessionStorage.removeItem('user');
+                window.location.href = 'login.html';
+            });
         }
-    }
 
-    login(email, password) {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                if (email && password) {
-                    const user = {
-                        email: email,
-                        username: email.split('@')[0],
-                        profilePic: 'profile.jpg'
-                    };
-                    sessionStorage.setItem('user', JSON.stringify(user));
-                    this.checkAuthState();
-                    resolve(user);
-                } else {
-                    reject(new Error('Invalid credentials'));
-                }
-            }, 1000);
-        });
+        setupPlaylistCreation(user);
+    } else {
+        console.log('No user logged in or missing user ID');
+        loginBtn.style.display = 'inline-block';
+        signupBtn.style.display = 'inline-block';
+        userProfile.style.display = 'none';
     }
-
-    signup(email, password) {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                if (email && password) {
-                    const user = {
-                        email: email,
-                        username: email.split('@')[0],
-                        profilePic: 'profile.jpg'
-                    };
-                    sessionStorage.setItem('user', JSON.stringify(user));
-                    this.checkAuthState();
-                    resolve(user);
-                } else {
-                    reject(new Error('Invalid input'));
-                }
-            }, 1000);
-        });
-    }
-
-    logout() {
-        sessionStorage.removeItem('user');
-        this.checkAuthState();
-        window.location.href = 'index.html';
-    }
-}
+});

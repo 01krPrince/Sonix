@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="display: flex; align-items: center; justify-content: center; justify-content: space-around;">
+    <input type="color" id="color">
+    <div id="box" style="height: 70vh; width: 70vw; font: red; font-weight: 800; font-size: xx-large; border: 2px solid red; display: flex; justify-content: center; align-items: center;">Showing realtime color changing effect</div>
+</body>
+<script>
+    const colorInput = document.getElementById("color"); // Select the color input element
+    let box = document.getElementById("box"); // Select the box div
+
+    // Function to change the background color of the box
+    function changeBg() {
+        const selectedColor = colorInput.value; // Get the selected color
+        box.style.backgroundColor = selectedColor; // Apply the selected color to the box
+    }
+
+    // Add an event listener to the color input to detect changes
+    colorInput.addEventListener("input", changeBg); // This will trigger changeBg whenever the color is changed
+</script>
+</html>
