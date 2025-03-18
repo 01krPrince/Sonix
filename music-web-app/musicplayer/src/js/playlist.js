@@ -1,12 +1,3 @@
-function togglePlaylist(playlistId) {
-    const playlist = document.getElementById(playlistId);
-    const icon = document.getElementById(`${playlistId}-icon`);
-    if (playlist && icon) {
-        playlist.classList.toggle('hidden');
-        icon.style.transform = playlist.classList.contains('hidden') ?
-            'rotate(0deg)' : 'rotate(180deg)';
-    }
-}
 
 function setupPlaylistHandlers() {
     const addPlaylistBtn = document.getElementById('createPlaylist');
@@ -42,31 +33,7 @@ function createPlaylist() {
     });
 }
 
-function addNewPlaylist(playlistName) {
-    const playlistContainer = document.querySelector('.overflow-y-auto');
-    
-    const playlistId = `playlist-${Date.now()}`;
-    const playlistHTML = `
-        <div class="mb-4">
-            <button class="flex items-center justify-between w-full p-3 rounded-lg hover:bg-white/10 transition"
-                onclick="togglePlaylist('${playlistId}')">
-                <div class="flex items-center gap-3">
-                    <i class="fas fa-music text-purple-500"></i>
-                    <span>${playlistName}</span>
-                </div>
-                <i id="${playlistId}-icon" class="fas fa-chevron-down transition"></i>
-            </button>
-            <div id="${playlistId}" class="hidden pl-8 mt-2 space-y-2">
-                <div class="text-gray-400 text-sm">No songs in playlist</div>
-            </div>
-        </div>
-    `;
-
-    playlistContainer.insertAdjacentHTML('beforeend', playlistHTML);
-}
-
 document.addEventListener('DOMContentLoaded', setupPlaylistHandlers);
-
 
 function setupPlaylistCreation(user) {
     const createPlaylistBtn = document.getElementById('createPlaylist');
@@ -169,7 +136,7 @@ function displayNewPlaylist(playlist) {
 
     const playlistItemsContainer = playlistsContainer.querySelector('div');
     if (playlistItemsContainer) {
-        playlistItemsContainer.insertAdjacentHTML('beforeend', playlistHTML); // Add the new playlist to the container
+        playlistItemsContainer.insertAdjacentHTML('beforeend', playlistHTML);
     }
 }
 

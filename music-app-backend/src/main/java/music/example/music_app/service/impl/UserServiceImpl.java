@@ -1,14 +1,13 @@
 package music.example.music_app.service.impl;
 
 import music.example.music_app.exception.ResourceNotFoundException;
-import music.example.music_app.model.Playlist;
 import music.example.music_app.model.User;
 import music.example.music_app.model.request.UserRequest;
 import music.example.music_app.repository.UserRepository;
+import music.example.music_app.service.PlaylistService;
 import music.example.music_app.service.UserService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,9 +15,11 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PlaylistService playlistService;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PlaylistService playlistService) {
         this.userRepository = userRepository;
+        this.playlistService = playlistService;
     }
 
     @Override
@@ -29,13 +30,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> getUserById(String id) {
         return Optional.ofNullable(userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("UserRequest not found with id: " + id)));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id)));
     }
 
     @Override
     public Optional<User> getUserByUsername(String username) {
         return Optional.ofNullable(userRepository.findByUsername(username)
-                .orElseThrow(() -> new ResourceNotFoundException("UserRequest not found with username: " + username)));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with username: " + username)));
     }
 
     @Override
@@ -49,20 +50,17 @@ public class UserServiceImpl implements UserService {
         newUser.setEmail(userRequest.getEmail());
         newUser.setPassword(userRequest.getPassword());
 
-        Playlist favorites = new Playlist();
-        favorites.setPlaylistName("Favorites");
-        favorites.setPlaylistSongs(new ArrayList<>());
+        User savedUser = userRepository.save(newUser);
 
-        return userRepository.save(newUser);
+        playlistService.initializeFav(savedUser.getId(), "Favorites");
+
+        return savedUser;
     }
-
-
 
     @Override
     public User updateUser(String id, User userDetails) {
         return userRepository.findById(id)
                 .map(existingUser -> {
-                    // Update only if the new value is not null
                     if (userDetails.getUsername() != null) {
                         existingUser.setUsername(userDetails.getUsername());
                     }
@@ -77,11 +75,10 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
     }
 
-
     @Override
     public void deleteUser(String id) {
         if (!userRepository.existsById(id)) {
-            throw new ResourceNotFoundException("UserRequest not found with id: " + id);
+            throw new ResourceNotFoundException("User not found with id: " + id);
         }
         userRepository.deleteById(id);
     }
@@ -94,9 +91,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User login(String email, String password) {
         User targetUser = userRepository.findByEmail(email);
-        if(targetUser.getPassword().equals(password)){
+        if (targetUser != null && targetUser.getPassword().equals(password)) {
             return targetUser;
         }
-        return new User();
+        throw new ResourceNotFoundException("Invalid email or password");
     }
 }

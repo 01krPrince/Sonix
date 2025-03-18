@@ -30,15 +30,13 @@ function shuffleArray(songs) {
 
 function displaySongs(songs) {
     const songList = document.getElementById('songsList');
-    // Clear previous songs
     songList.innerHTML = '';
 
     songs.forEach(song => {
         const songItem = document.createElement('div');
         songItem.className = 'bg-white/5 backdrop-blur-lg rounded-xl overflow-hidden hover:bg-white/10 transition-all duration-300 group p-4';
-        
-        // Create a unique ID for the song item
-        const songId = `song-${song.title.replace(/\s+/g, '-')}`; // Replace spaces with dashes for a valid ID
+
+        const songId = `song-${song.title.replace(/\s+/g, '-')}`;
 
         songItem.innerHTML = `
         <div class="cursor-pointer -z-20">
@@ -55,7 +53,7 @@ function displaySongs(songs) {
             <div class="flex items-center justify-between">
                 <span class="text-xs px-2 py-1 bg-purple-500/20 text-purple-400 rounded-full">${song.genre}</span>
                 <div class="flex gap-3">
-                    <button class="text-gray-400 hover:text-purple-500 transition">
+                    <button class="text-gray-400 hover:text-purple-500 transition" onclick="addToFav('${song.title}')">
                         <i class="fas fa-heart"></i>
                     </button>
                     <button class="text-gray-400 hover:text-purple-500 transition">
@@ -69,7 +67,12 @@ function displaySongs(songs) {
     });
 }
 
-// Function to play a song
+function addToFav(title) {
+    console.log(`${title} is added in favourites❤️`);
+    
+}
+
+
 function playSong(url, title, artist, imgSrc, songId) {
     document.getElementById('currentSongTitle').textContent = title;
     document.getElementById('currentArtist').textContent = artist;
@@ -77,7 +80,6 @@ function playSong(url, title, artist, imgSrc, songId) {
     document.getElementById('current-song').src = url;
 }
 
-// Function to search songs
 function searchSongs(event) {
     const searchInput = event.target.value.toLowerCase();
     const filteredSongs = allSongs.filter(song => 

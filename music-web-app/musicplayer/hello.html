@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="createPlaylist" class="justify-between flex items-center text-lg font-bold mb-4 px-5 mt-1 hover:text-purple-500 transition cursor-pointer" title="Add new playlist" onclick="toggleInputArea()">
+        <h2>Create Playlist</h2>
+        <i class="fas fa-plus"></i>
+    </div>
+    
+    <div class="hidden pl-4 mt-2 space-y-2 z-20" id="newPlaylist">
+        <input type="text" class="bg-gray-800 px-2" required placeholder="Playlist name...">
+    </div>
+    
+    <script>
+        // This function toggles the visibility of the input field
+        function toggleInputArea() {
+            const inputArea = document.getElementById('newPlaylist');
+            inputArea.classList.toggle('hidden'); // Show or hide the input field
+        }
+    </script>
+</body>
+</html>

@@ -15,4 +15,6 @@ public interface PlaylistService {
     Playlist addSongsInPlaylist(String id, Song song);
     Playlist deleteSongFromPlaylist(String playlistId, String songId);
     void deletePlaylist(String id);
+
+    void initializeFav(String id, String favorites);
 }
