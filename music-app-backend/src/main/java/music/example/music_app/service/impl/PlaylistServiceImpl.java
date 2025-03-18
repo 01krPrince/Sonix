@@ -1,7 +1,6 @@
 package music.example.music_app.service.impl;
 
 import music.example.music_app.model.Playlist;
-import music.example.music_app.model.Song;
 import music.example.music_app.model.request.CreatePlaylistRequest;
 import music.example.music_app.repository.PlaylistRepository;
 import music.example.music_app.service.PlaylistService;
@@ -21,13 +20,11 @@ public class PlaylistServiceImpl implements PlaylistService {
     }
 
     public void initializeFav(String userId, String fav) {
-        if (playlistRepository.findByPlaylistName(fav) == null) {
-            Playlist newPlaylist = new Playlist();
-            newPlaylist.setUserId(userId);
-            newPlaylist.setPlaylistName(fav);
-            newPlaylist.setPlaylistSongs(new ArrayList<>());
-            playlistRepository.save(newPlaylist);
-        }
+        Playlist newPlaylist = new Playlist();
+        newPlaylist.setUserId(userId);
+        newPlaylist.setPlaylistName(fav);
+        newPlaylist.setPlaylistSongs(new ArrayList<>());
+        playlistRepository.save(newPlaylist);
     }
 
     @Override
@@ -62,30 +59,43 @@ public class PlaylistServiceImpl implements PlaylistService {
     }
 
     @Override
-    public Playlist addSongsInPlaylist(String id, Song song) {
-        return playlistRepository.findById(id).map(existingPlaylist -> {
-            List<Song> playlistSongs = existingPlaylist.getPlaylistSongs();
-            if (playlistSongs == null) {
-                playlistSongs = new ArrayList<>();
-            }
-            playlistSongs.add(song);
-            existingPlaylist.setPlaylistSongs(playlistSongs);
+    public Playlist addSongsInPlaylist(String playlistId, String songId) {
+        Playlist playlist = playlistRepository.findById(playlistId)
+                .orElseThrow(() -> new RuntimeException("Playlist not found with id: " + playlistId));
 
-            return playlistRepository.save(existingPlaylist);
-        }).orElseThrow(() -> new RuntimeException("Playlist not found with id: " + id));
+        List<String> playlistSongs = playlist.getPlaylistSongs();
+
+        if (playlistSongs == null) {
+            playlistSongs = new ArrayList<>();
+        }
+
+        if (!playlistSongs.contains(songId)) {
+            playlistSongs.add(songId);
+            playlist.setPlaylistSongs(playlistSongs);
+            return playlistRepository.save(playlist);
+        }
+
+        return playlist;
     }
+
+
 
     @Override
     public Playlist deleteSongFromPlaylist(String playlistId, String songId) {
-        return playlistRepository.findById(playlistId).map(existingPlaylist -> {
-            List<Song> playlistSongs = existingPlaylist.getPlaylistSongs();
-            if (playlistSongs != null) {
-                playlistSongs.removeIf(song -> song.getId().equals(songId));
-            }
-            existingPlaylist.setPlaylistSongs(playlistSongs);
-            return playlistRepository.save(existingPlaylist);
-        }).orElseThrow(() -> new RuntimeException("Playlist not found with id: " + playlistId));
+        Playlist playlist = playlistRepository.findById(playlistId)
+                .orElseThrow(() -> new RuntimeException("Playlist not found with id: " + playlistId));
+
+        List<String> playlistSongs = playlist.getPlaylistSongs();
+
+        if (playlistSongs != null && playlistSongs.contains(songId)) {
+            playlistSongs.remove(songId);
+            playlist.setPlaylistSongs(playlistSongs);
+            return playlistRepository.save(playlist);
+        }
+
+        return playlist;
     }
+
 
     @Override
     public void deletePlaylist(String id) {

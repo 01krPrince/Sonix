@@ -19,5 +19,5 @@ public class Playlist {
     private String id;
     private String userId;
     private String playlistName;
-    private List<Song> playlistSongs;
+    private List<String> playlistSongs;
 }
