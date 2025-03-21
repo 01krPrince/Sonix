@@ -11,9 +11,10 @@ public interface PlaylistService {
     Optional<Playlist> getPlaylistById(String id);
     List<Playlist> getPlaylistsByUserId(String userId);
     Playlist createPlaylist(CreatePlaylistRequest createPlaylistRequest);
+    void deletePlaylist(String playlistId, String userId);
     Playlist addSongsInPlaylist(String id, String songId);
-    Playlist deleteSongFromPlaylist(String playlistId, String songId);
-    void deletePlaylist(String id);
 
     void initializeFav(String id, String favorites);
+
+    Playlist removeSongFromPlaylist(String playlistId, String songId);
 }

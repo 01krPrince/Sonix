@@ -59,6 +59,19 @@ public class PlaylistServiceImpl implements PlaylistService {
     }
 
     @Override
+    public void deletePlaylist(String playlistId, String userId) {
+        Playlist playlist = playlistRepository.findById(playlistId)
+                .orElseThrow(() -> new RuntimeException("Playlist not found with id: " + playlistId));
+
+        if (!playlist.getUserId().equals(userId)) {
+            throw new RuntimeException("Unauthorized: You can only delete your own playlist.");
+        }
+
+        playlistRepository.deleteById(playlistId);
+    }
+
+
+    @Override
     public Playlist addSongsInPlaylist(String playlistId, String songId) {
         Playlist playlist = playlistRepository.findById(playlistId)
                 .orElseThrow(() -> new RuntimeException("Playlist not found with id: " + playlistId));
@@ -79,26 +92,20 @@ public class PlaylistServiceImpl implements PlaylistService {
     }
 
 
-
     @Override
-    public Playlist deleteSongFromPlaylist(String playlistId, String songId) {
+    public Playlist removeSongFromPlaylist(String playlistId, String songId) {
         Playlist playlist = playlistRepository.findById(playlistId)
                 .orElseThrow(() -> new RuntimeException("Playlist not found with id: " + playlistId));
 
-        List<String> playlistSongs = playlist.getPlaylistSongs();
+        List<String> playlistSongs = playlist.getPlaylistSongs(); // Assuming it's a list of song IDs
 
         if (playlistSongs != null && playlistSongs.contains(songId)) {
-            playlistSongs.remove(songId);
+            playlistSongs.remove(songId); // Remove the song
             playlist.setPlaylistSongs(playlistSongs);
-            return playlistRepository.save(playlist);
+            return playlistRepository.save(playlist); // Save updated playlist
+        } else {
+            throw new RuntimeException("Song not found in playlist");
         }
-
-        return playlist;
     }
 
-
-    @Override
-    public void deletePlaylist(String id) {
-        playlistRepository.deleteById(id);
-    }
 }

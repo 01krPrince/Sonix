@@ -1,7 +1,6 @@
 package music.example.music_app.controller;
 
 import music.example.music_app.model.Playlist;
-import music.example.music_app.model.Song;  // Assuming you have a Song model
 import music.example.music_app.model.request.CreatePlaylistRequest;
 import music.example.music_app.service.PlaylistService;
 import org.springframework.http.ResponseEntity;
@@ -48,13 +47,16 @@ public class PlaylistController {
         return ResponseEntity.ok(playlistService.createPlaylist(createPlaylistRequest));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePlaylist(@PathVariable String id) {
-        playlistService.deletePlaylist(id);
+    @DeleteMapping("/{playlistId}")
+    public ResponseEntity<Void> deletePlaylist(
+            @PathVariable String playlistId,
+            @RequestParam String userId) { // Assuming userId is passed in request
+        playlistService.deletePlaylist(playlistId, userId);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{playlistId}/songs")
+
+    @PutMapping("/{playlistId}/songs/{songId}")
     public ResponseEntity<Playlist> addSongToPlaylist(
             @PathVariable String playlistId,
             @PathVariable String songId) {
@@ -63,10 +65,10 @@ public class PlaylistController {
     }
 
     @DeleteMapping("/{playlistId}/songs/{songId}")
-    public ResponseEntity<Playlist> deleteSongFromPlaylist(
+    public ResponseEntity<Playlist> removeSongFromPlaylist(
             @PathVariable String playlistId,
             @PathVariable String songId) {
-        Playlist updatedPlaylist = playlistService.deleteSongFromPlaylist(playlistId, songId);
+        Playlist updatedPlaylist = playlistService.removeSongFromPlaylist(playlistId, songId);
         return ResponseEntity.ok(updatedPlaylist);
     }
 }
