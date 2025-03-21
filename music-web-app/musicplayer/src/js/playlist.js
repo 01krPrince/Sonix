@@ -1,3 +1,8 @@
+let favoritePlaylist = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+    setupPlaylistHandlers();
+});
 
 function setupPlaylistHandlers() {
     const addPlaylistBtn = document.getElementById('createPlaylist');
@@ -22,38 +27,24 @@ function createPlaylist() {
                 newPlaylistDiv.classList.add("hidden");
                 input.value = "";
             }
-        }
-    });
-
-    input.addEventListener('keyup', function (e) {
-        if (e.key === "Escape") {
+        } else if (e.key === "Escape") {
             newPlaylistDiv.classList.add("hidden");
             input.value = "";
         }
     });
 }
 
-document.addEventListener('DOMContentLoaded', setupPlaylistHandlers);
-
 function setupPlaylistCreation(user) {
     const createPlaylistBtn = document.getElementById('createPlaylist');
     const newPlaylistSection = document.getElementById('newPlaylist');
-    
-    console.log('Setting up playlist creation...');
-    console.log('Create button found:', !!createPlaylistBtn);
-    console.log('New playlist section found:', !!newPlaylistSection);
 
     if (!createPlaylistBtn || !newPlaylistSection) {
         console.error('Could not find playlist elements');
         return;
     }
 
-    const newBtn = createPlaylistBtn.cloneNode(true);
-    createPlaylistBtn.parentNode.replaceChild(newBtn, createPlaylistBtn);
-
-    newBtn.addEventListener('click', function(e) {
+    createPlaylistBtn.addEventListener('click', function(e) {
         e.preventDefault();
-        console.log('Create playlist clicked');
         newPlaylistSection.classList.toggle('hidden');
         const input = newPlaylistSection.querySelector('input');
         if (input && !newPlaylistSection.classList.contains('hidden')) {
@@ -67,12 +58,11 @@ function setupPlaylistCreation(user) {
             if (e.key === 'Enter') {
                 const playlistName = this.value.trim();
                 if (playlistName) {
-                    console.log('Creating playlist with name:', playlistName);
                     const createdPlaylist = await createNewPlaylist(playlistName, user.id);
                     if (createdPlaylist) {
                         displayNewPlaylist(createdPlaylist);
-                        this.value = ''; // Clear the input
-                        newPlaylistSection.classList.add('hidden'); // Hide the input section again
+                        this.value = ''; 
+                        newPlaylistSection.classList.add('hidden'); 
                     }
                 }
             }
@@ -82,7 +72,6 @@ function setupPlaylistCreation(user) {
 
 async function createNewPlaylist(playlistName, userId) {
     try {
-        console.log('Creating playlist:', playlistName, 'for user:', userId);
         const response = await fetch('https://sonix-s830.onrender.com/api/playlists', {
             method: 'POST',
             headers: {
@@ -96,24 +85,21 @@ async function createNewPlaylist(playlistName, userId) {
         });
 
         const data = await response.json();
-        console.log('API Response:', data);
 
         if (!response.ok) {
             throw new Error(`Failed to create playlist: ${data.message || 'Unknown error'}`);
         }
 
-        return data; // Return the created playlist object
+        return data;
     } catch (error) {
         console.error('Error creating playlist:', error);
         alert('Failed to create playlist: ' + error.message);
-        return null; // Return null if the playlist creation failed
+        return null;
     }
 }
 
 function displayNewPlaylist(playlist) {
     const playlistsContainer = document.querySelector('.bg-white\\/5.backdrop-blur-lg');
-    console.log('Display playlists container found:', !!playlistsContainer);
-    console.log('New playlist to display:', playlist);
 
     if (!playlistsContainer) {
         console.error('Could not find playlists container');
@@ -134,15 +120,11 @@ function displayNewPlaylist(playlist) {
         </div>
     `;
 
-    const playlistItemsContainer = playlistsContainer.querySelector('div');
-    if (playlistItemsContainer) {
-        playlistItemsContainer.insertAdjacentHTML('beforeend', playlistHTML);
-    }
+    playlistsContainer.insertAdjacentHTML('beforeend', playlistHTML);
 }
 
 async function fetchUserPlaylists(userId) {
     try {
-        console.log('Fetching playlists for user:', userId);
         const response = await fetch(`https://sonix-s830.onrender.com/api/playlists/user/${userId}`, {
             headers: {
                 'accept': '*/*'
@@ -150,10 +132,13 @@ async function fetchUserPlaylists(userId) {
         });
 
         const data = await response.json();
-        console.log('Playlists API Response:', data);
 
         if (!response.ok) {
             throw new Error(`Failed to fetch playlists: ${data.message || 'Unknown error'}`);
+        }
+
+        if (data.length > 0) {
+            favoritePlaylist = data[0];
         }
 
         displayPlaylists(data);
@@ -164,44 +149,63 @@ async function fetchUserPlaylists(userId) {
 
 function displayPlaylists(playlists) {
     const playlistsContainer = document.querySelector('.bg-white\\/5.backdrop-blur-lg');
-    console.log('Display playlists container found:', !!playlistsContainer);
-    console.log('Playlists to display:', playlists);
 
     if (!playlistsContainer) {
         console.error('Could not find playlists container');
         return;
     }
 
-    const playlistItemsContainer = document.createElement('div');
-    playlistItemsContainer.className = '';
+    playlistsContainer.innerHTML = "";
 
-    if (!Array.isArray(playlists) || playlists.length === 0) {
-        playlistItemsContainer.innerHTML = `
-            <div class="text-gray-400 text-sm p-3">No playlists yet</div>
-        `;
-    } else {
-        playlists.forEach(playlist => {
-            const playlistHTML = `
-                <div class="mb-4">
-                    <button class="flex items-center justify-between w-full p-3 rounded-lg hover:bg-white/10 transition">
-                        <div class="flex items-center gap-3">
-                            <i class="fas fa-music text-purple-500"></i>
-                            <span>${playlist.playlistName}</span>
-                        </div>
-                    </button>
-                    <div class="hidden pl-4 mt-2 space-y-2">
-                        <div class="text-gray-400 text-sm">No songs in playlist</div>
+    playlists.forEach(playlist => {
+        const playlistHTML = `
+            <div class="mb-4">
+                <button class="flex items-center justify-between w-full p-3 rounded-lg hover:bg-white/10 transition">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-music text-purple-500"></i>
+                        <span>${playlist.playlistName}</span>
                     </div>
+                </button>
+                <div class="hidden pl-4 mt-2 space-y-2">
+                    <div class="text-gray-400 text-sm">No songs in playlist</div>
                 </div>
-            `;
-            playlistItemsContainer.insertAdjacentHTML('beforeend', playlistHTML);
-        });
+            </div>
+        `;
+        playlistsContainer.insertAdjacentHTML('beforeend', playlistHTML);
+    });
+}
+
+
+
+async function toggleFav(songId) {
+    if (!favoritePlaylist) {
+        alert("No favorite playlist found. Please create one first.");
+        return;
     }
 
-    const existingContent = playlistsContainer.querySelector('div > div');
-    if (existingContent) {
-        existingContent.replaceWith(playlistItemsContainer);
-    } else {
-        playlistsContainer.querySelector('div').appendChild(playlistItemsContainer);
-    }
+    let isExists = favoritePlaylist.playlistSongs.includes(songId);    
+        try {
+            const addSongResponse = await fetch(`http://localhost:8080/api/playlists/${favoritePlaylist.id}/songs/${songId}`, {
+                method: isExists ? 'DELETE' : 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'accept': '*/*'
+                }
+            });
+    
+            if (!addSongResponse.ok) {
+                throw new Error(`Failed to add song: ${await addSongResponse.text()}`);
+            }
+    
+            console.log(`⭐ Added to favorites: 🎵 Song Id: ${songId}`);
+    
+            favoritePlaylist.playlistSongs.push({ id: songId });
+    
+        } catch (error) {
+            console.error("Error adding song to favorites:", error);
+            alert("Failed to add song to favorites: " + error.message);
+        }
 }
+
+
+

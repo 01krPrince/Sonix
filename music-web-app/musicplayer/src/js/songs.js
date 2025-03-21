@@ -33,6 +33,7 @@ function displaySongs(songs) {
     songList.innerHTML = '';
 
     songs.forEach(song => {
+        // console.log(song)
         const songItem = document.createElement('div');
         songItem.className = 'bg-white/5 backdrop-blur-lg rounded-xl overflow-hidden hover:bg-white/10 transition-all duration-300 group p-4';
 
@@ -40,7 +41,7 @@ function displaySongs(songs) {
 
         songItem.innerHTML = `
         <div class="cursor-pointer -z-20">
-            <div class="relative" onclick="playSong('${song.songUrl}', '${song.title}', '${song.artistName}', '${song.previewImg}', '${songId}')">
+            <div class="relative" onclick="playSong('${song.songUrl}', '${song.title.replace(/'/g, "\\'")}', '${song.artistName.replace(/'/g, "\\'")}', '${song.previewImg}', '${songId}')">
                 <img src="${song.previewImg}" alt="${song.title}" class="w-full h-40 aspect-square object-cover">
                 <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                     <button id="${songId}-playBtn" class="bg-purple-500 text-white p-4 rounded-full hover:bg-purple-600 transform hover:scale-110 transition-all">
@@ -53,7 +54,8 @@ function displaySongs(songs) {
             <div class="flex items-center justify-between">
                 <span class="text-xs px-2 py-1 bg-purple-500/20 text-purple-400 rounded-full">${song.genre}</span>
                 <div class="flex gap-3">
-                    <button class="text-gray-400 hover:text-purple-500 transition" onclick="addToFav('${song.title}')">
+                    <button class="text-gray-400 hover:text-purple-500 transition" 
+                        onclick="toggleFav('${song.id}')">
                         <i class="fas fa-heart"></i>
                     </button>
                     <button class="text-gray-400 hover:text-purple-500 transition">
@@ -66,12 +68,6 @@ function displaySongs(songs) {
         songList.appendChild(songItem);
     });
 }
-
-function addToFav(title) {
-    console.log(`${title} is added in favourites❤️`);
-    
-}
-
 
 function playSong(url, title, artist, imgSrc, songId) {
     document.getElementById('currentSongTitle').textContent = title;
