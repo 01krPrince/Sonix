@@ -1,4 +1,5 @@
 let favoritePlaylist = null;
+window.favoritePlaylist = favoritePlaylist;
 
 document.addEventListener('DOMContentLoaded', () => {
     setupPlaylistHandlers();
@@ -175,36 +176,52 @@ function displayPlaylists(playlists) {
     });
 }
 
-
-
 async function toggleFav(songId) {
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    if (!user) {
+        alert("Log in to add favorites.")
+        return;
+    }
     if (!favoritePlaylist) {
         alert("No favorite playlist found. Please create one first.");
         return;
     }
 
     let isExists = favoritePlaylist.playlistSongs.includes(songId);    
-        try {
-            const addSongResponse = await fetch(`http://localhost:8080/api/playlists/${favoritePlaylist.id}/songs/${songId}`, {
-                method: isExists ? 'DELETE' : 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'accept': '*/*'
-                }
-            });
+    const heartButton = document.getElementById(`heart-${songId}`);
     
-            if (!addSongResponse.ok) {
-                throw new Error(`Failed to add song: ${await addSongResponse.text()}`);
+    try {
+        const addSongResponse = await fetch(`https://sonix-s830.onrender.com/api/playlists/${favoritePlaylist.id}/songs/${songId}`, {
+            method: isExists ? 'DELETE' : 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'accept': '*/*'
             }
-    
-            console.log(`⭐ Added to favorites: 🎵 Song Id: ${songId}`);
-    
-            favoritePlaylist.playlistSongs.push({ id: songId });
-    
-        } catch (error) {
-            console.error("Error adding song to favorites:", error);
-            alert("Failed to add song to favorites: " + error.message);
+        });
+
+        if (!addSongResponse.ok) {
+            throw new Error(`Failed to ${isExists ? 'remove' : 'add'} song: ${await addSongResponse.text()}`);
         }
+
+        // Update the local favoritePlaylist state
+        if (isExists) {
+            favoritePlaylist.playlistSongs = favoritePlaylist.playlistSongs.filter(id => id !== songId);
+            console.log(`⭐ Removed from favorites: 🎵 Song Id: ${songId}`);
+            // Update UI to show unfavorited state
+            heartButton.classList.remove('text-purple-600');
+            heartButton.classList.add('text-gray-400', 'hover:text-purple-500');
+        } else {
+            favoritePlaylist.playlistSongs.push(songId);
+            console.log(`⭐ Added to favorites: 🎵 Song Id: ${songId}`);
+            // Update UI to show favorited state
+            heartButton.classList.remove('text-gray-400', 'hover:text-purple-500');
+            heartButton.classList.add('text-purple-600');
+        }
+
+    } catch (error) {
+        console.error("Error toggling favorite:", error);
+        alert(`Failed to ${isExists ? 'remove' : 'add'} song to favorites: ${error.message}`);
+    }
 }
 
 
