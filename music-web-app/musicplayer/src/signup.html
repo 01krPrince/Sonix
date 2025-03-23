@@ -69,7 +69,7 @@
                         class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none">
                 </div>
 
-                <button type="submit"
+                <button type="submit" id="signupButton"
                     class="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600 transition duration-200">
                     Sign Up
                 </button>
@@ -91,12 +91,17 @@
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
             const messageElement = document.getElementById('message');
+            const signupButton = document.getElementById('signupButton');
 
             if (password !== confirmPassword) {
                 messageElement.textContent = "Passwords do not match!";
                 messageElement.classList.add("text-red-500");
                 return;
             }
+
+            // Disable button and show loading state
+            signupButton.disabled = true;
+            signupButton.textContent = "Signing up...";
 
             const data = {
                 username: username,
@@ -116,6 +121,8 @@
                 if (data.error) {
                     messageElement.textContent = data.message;
                     messageElement.classList.add("text-red-500");
+                    signupButton.disabled = false;
+                    signupButton.textContent = "Sign Up";
                 } else {
                     // Store user data including the ID
                     const userData = {
@@ -131,6 +138,8 @@
             .catch(error => {
                 messageElement.textContent = "An error occurred. Please try again.";
                 messageElement.classList.add("text-red-500");
+                signupButton.disabled = false;
+                signupButton.textContent = "Sign Up";
             });
         });
     </script>

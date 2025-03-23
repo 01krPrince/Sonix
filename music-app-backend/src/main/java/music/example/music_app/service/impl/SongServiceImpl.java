@@ -25,7 +25,7 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public Optional<Song> getSongById(Long id) {
+    public Optional<Song> getSongById(String id) {
         return Optional.ofNullable(songRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Song not found with id: " + id)));
     }
@@ -52,7 +52,7 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public Song updateSong(Long id, Song songDetails) {
+    public Song updateSong(String id, Song songDetails) {
         return songRepository.findById(id)
                 .map(existingSong -> {
                     existingSong.setTitle(songDetails.getTitle());
@@ -66,7 +66,7 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public void deleteSong(Long id) {
+    public void deleteSong(String id) {
         if (!songRepository.existsById(id)) {
             throw new ResourceNotFoundException("Song not found with id: " + id);
         }

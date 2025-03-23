@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface SongRepository extends MongoRepository<Song, Long> {
+public interface SongRepository extends MongoRepository<Song, String> {
     Optional<Song> findByTitle(String title);
     boolean existsByTitle(String title);
     List<Song> findByArtistName(String artistName);

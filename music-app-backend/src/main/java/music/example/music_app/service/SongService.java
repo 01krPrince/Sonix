@@ -8,11 +8,11 @@ import java.util.Optional;
 
 public interface SongService {
     List<Song> getAllSongs();
-    Optional<Song> getSongById(Long id);
+    Optional<Song> getSongById(String id);
     Optional<Song> getSongByTitle(String title);
     Song createSong(AddSongRequest addSongRequest);
-    Song updateSong(Long id, Song song);
-    void deleteSong(Long id);
+    Song updateSong(String id, Song song);
+    void deleteSong(String id);
     boolean existsByTitle(String title);
 
     List<Song> getSongsByArtistName(String artistName);

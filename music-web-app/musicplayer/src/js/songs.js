@@ -1,9 +1,30 @@
 let currentlyPlayingSong = null;
 let allSongs = [];
+let showingFavorites = false;
+let currentPlaylist = null;
 
 async function fetchSongs() {
     document.getElementById('loading').classList.remove('hidden');
     try {
+        // First fetch the user's favorite playlist if they are logged in
+        const user = JSON.parse(sessionStorage.getItem('user'));
+        if (user) {
+            try {
+                const response = await fetch(`https://sonix-s830.onrender.com/api/playlists/user/${user.id}`, {
+                    headers: {
+                        'accept': '*/*'
+                    }
+                });
+                const data = await response.json();
+                if (response.ok && data.length > 0) {
+                    window.favoritePlaylist = data[0];
+                }
+            } catch (error) {
+                console.error('Error fetching favorite playlist:', error);
+            }
+        }
+
+        // Then fetch all songs
         const response = await fetch('https://sonix-s830.onrender.com/api/songs');
         if (!response.ok) {
             throw new Error('Failed to fetch songs');
@@ -23,7 +44,7 @@ async function fetchSongs() {
 function shuffleArray(songs) {
     for (let i = songs.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [songs[i], songs[j]] = [songs[j], songs[i]]; // Swap elements
+        [songs[i], songs[j]] = [songs[j], songs[i]];
     }
     return songs;
 }
@@ -32,15 +53,26 @@ function displaySongs(songs) {
     const songList = document.getElementById('songsList');
     songList.innerHTML = '';
 
+    if (songs.length === 0) {
+        songList.innerHTML = `
+            <div class="text-center text-gray-400 py-8">
+                <p>${showingFavorites ? 'No favorite songs yet' : 'No songs found'}</p>
+            </div>
+        `;
+        return;
+    }
+
     songs.forEach(song => {
-        // console.log(song)
         const songItem = document.createElement('div');
         songItem.className = 'bg-white/5 backdrop-blur-lg rounded-xl overflow-hidden hover:bg-white/10 transition-all duration-300 group p-4';
 
         const songId = `song-${song.title.replace(/\s+/g, '-')}`;
+        const heartButtonId = `heart-${song.id}`;
+        const plusButtonId = `plus-${song.id}`;
+        const playlistDropdownId = `playlist-dropdown-${song.id}`;
 
         songItem.innerHTML = `
-        <div class="cursor-pointer -z-20">
+        <div>
             <div class="relative" onclick="playSong('${song.songUrl}', '${song.title.replace(/'/g, "\\'")}', '${song.artistName.replace(/'/g, "\\'")}', '${song.previewImg}', '${songId}')">
                 <img src="${song.previewImg}" alt="${song.title}" class="w-full h-40 aspect-square object-cover">
                 <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
@@ -54,19 +86,48 @@ function displaySongs(songs) {
             <div class="flex items-center justify-between">
                 <span class="text-xs px-2 py-1 bg-purple-500/20 text-purple-400 rounded-full">${song.genre}</span>
                 <div class="flex gap-3">
-                    <button class="text-gray-400 hover:text-purple-500 transition" 
-                        onclick="toggleFav('${song.id}')">
+                    <button id="${heartButtonId}" class="text-gray-400 hover:text-purple-500 transition" 
+                        onclick="event.stopPropagation(); toggleFav('${song.id}')">
                         <i class="fas fa-heart"></i>
                     </button>
-                    <button class="text-gray-400 hover:text-purple-500 transition">
-                        <i class="fas fa-plus"></i>
-                    </button>
+                    <div class="relative">
+                        <button id="${plusButtonId}" class="text-gray-400 hover:text-purple-500 transition"
+                            onclick="event.stopPropagation();">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        
+                    </div>
                 </div>
             </div>
         </div>
         `;
         songList.appendChild(songItem);
     });
+
+    // Update heart icons after displaying songs
+    updateHeartIcons();
+}
+
+function updateHeartIcons() {
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    if (!user) return;
+
+    // First, reset all heart buttons to default state
+    document.querySelectorAll('[id^="heart-"]').forEach(button => {
+        button.classList.remove('text-purple-600');
+        button.classList.add('text-gray-400', 'hover:text-purple-500');
+    });
+    
+    // Then, set the favorited state for songs in favorites
+    if (window.favoritePlaylist && window.favoritePlaylist.playlistSongs) {
+        window.favoritePlaylist.playlistSongs.forEach(songId => {
+            const heartButton = document.getElementById(`heart-${songId}`);
+            if (heartButton) {
+                heartButton.classList.remove('text-gray-400', 'hover:text-purple-500');
+                heartButton.classList.add('text-purple-600');
+            }
+        });
+    }
 }
 
 function playSong(url, title, artist, imgSrc, songId) {
@@ -86,6 +147,143 @@ function searchSongs(event) {
     displaySongs(filteredSongs);
 }
 
+function toggleFavorites() {
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    if (!user) {
+        alert("Please log in to view home");
+        return;
+    }
+
+    showingFavorites = !showingFavorites;
+    currentPlaylist = null;
+    const favoritesBtn = document.getElementById('favoritesBtn');
+    
+    if (showingFavorites) {
+        // Show all songs (home view)
+        displaySongs(allSongs);
+        favoritesBtn.classList.add('bg-white/10');
+        // Remove selection from playlist buttons
+        document.querySelectorAll('button[data-playlist-id]').forEach(button => {
+            button.classList.remove('bg-white/10');
+        });
+    } else {
+        // Show all songs
+        displaySongs(allSongs);
+        favoritesBtn.classList.remove('bg-white/10');
+    }
+}
+
+function selectPlaylist(playlist) {
+    showingFavorites = false;
+    currentPlaylist = playlist;
+    const favoritesBtn = document.getElementById('favoritesBtn');
+    favoritesBtn.classList.remove('bg-white/10');
+
+    // Show songs from the selected playlist
+    const playlistSongs = allSongs.filter(song => 
+        playlist.playlistSongs.includes(song.id)
+    );
+    displaySongs(playlistSongs);
+}
+
+function goHome() {
+    // Show all songs
+    displaySongs(allSongs);
+    showingFavorites = false;
+    currentPlaylist = null;
+    
+    // Remove selected state from all playlist buttons
+    document.querySelectorAll('button[data-playlist-id]').forEach(button => {
+        button.classList.remove('bg-white/10');
+    });
+}
+
+async function showPlaylistDropdown(dropdownId, songId) {
+    // Close all other dropdowns first
+    document.querySelectorAll('[id^="playlist-dropdown-"]').forEach(dropdown => {
+        if (dropdown.id !== dropdownId) {
+            dropdown.classList.add('hidden');
+        }
+    });
+    
+    // Toggle the clicked dropdown
+    const dropdown = document.getElementById(dropdownId);
+    const playlistList = document.getElementById(`playlist-list-${songId}`);
+    
+    // If dropdown is hidden, populate and show it
+    if (dropdown.classList.contains('hidden')) {
+        await populatePlaylistDropdown(songId);
+        dropdown.classList.remove('hidden');
+    } else {
+        dropdown.classList.add('hidden');
+    }
+}
+
+async function populatePlaylistDropdown(songId) {
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    if (!user) {
+        alert('Please log in to add songs to playlists');
+        return;
+    }
+
+    try {
+        const response = await fetch(`https://sonix-s830.onrender.com/api/playlists/user/${user.id}`, {
+            headers: {
+                'accept': '*/*'
+            }
+        });
+
+        const playlists = await response.json();
+        if (!response.ok) {
+            throw new Error(`Failed to fetch playlists: ${playlists.message || 'Unknown error'}`);
+        }
+
+        const playlistList = document.getElementById(`playlist-list-${songId}`);
+        if (!playlistList) return;
+
+        playlistList.innerHTML = playlists.map(playlist => `
+            <button onclick="event.stopPropagation(); addToPlaylist('${songId}', '${playlist.id}')" 
+                class="w-full text-left px-3 py-2 hover:bg-gray-700 transition">
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-music text-purple-500"></i>
+                    <span class="truncate">${playlist.playlistName}</span>
+                </div>
+            </button>
+        `).join('');
+    } catch (error) {
+        console.error('Error populating playlist dropdown:', error);
+        alert('Failed to load playlists. Please try again.');
+    }
+}
+
+async function addToPlaylist(songId, playlistId) {
+    try {
+        const response = await fetch(`https://sonix-s830.onrender.com/api/playlists/${playlistId}/songs/${songId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'accept': '*/*'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to add song to playlist: ${await response.text()}`);
+        }
+
+        // Close the dropdown
+        const dropdown = document.getElementById(`playlist-dropdown-${songId}`);
+        if (dropdown) {
+            dropdown.classList.add('hidden');
+        }
+
+        // Show success message
+        alert('Song added to playlist successfully!');
+    } catch (error) {
+        console.error('Error adding song to playlist:', error);
+        alert('Failed to add song to playlist: ' + error.message);
+    }
+}
+
 // Call fetchSongs when the page loads
 document.addEventListener('DOMContentLoaded', () => {
     fetchSongs();
@@ -93,5 +291,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('searchInput');
     if (searchInput) {
         searchInput.addEventListener('input', searchSongs);
+    }
+    // Add favorites button click handler
+    const favoritesBtn = document.getElementById('favoritesBtn');
+    if (favoritesBtn) {
+        favoritesBtn.addEventListener('click', toggleFavorites);
     }
 });
