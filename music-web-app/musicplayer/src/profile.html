@@ -22,20 +22,20 @@
     </script>
 </head>
 
-<body class="dark:bg-gray-900 dark:text-white bg-gray-50 text-gray-900 transition-colors duration-200">
+<body class="dark:bg-gray-900 dark:text-white bg-gray-50 text-gray-900 transition-colors duration-200 min-h-screen">
     <nav
         class="dark:bg-black/40 bg-white/80 backdrop-blur-md fixed top-0 w-full z-50 border-b dark:border-gray-800 border-gray-200">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-2">
                 <a href="index.html" class="flex items-center gap-2">
                     <i class="fas fa-music text-2xl text-purple-500"></i>
                     <h1
-                        class="text-2xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
+                        class="text-xl sm:text-2xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
                         Sonix
                     </h1>
                 </a>
             </div>
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-2 sm:gap-4">
                 <a href="profile.html" id="profileBtn"
                     class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800">
                     <i class="fas fa-user-circle text-xl"></i>
@@ -48,32 +48,32 @@
         </div>
     </nav>
 
-    <div class="container mx-auto px-6 mt-24 w-full max-w-[50vw] text-center">
-        <h1 class="text-4xl font-bold text-primary-dark dark:text-primary-light mb-6"><u>Profile</u></h1>
-    </div>
+    <div class="container mx-auto px-4 sm:px-6 pt-24 pb-8">
+        <div class="max-w-2xl mx-auto">
+            <h1 class="text-3xl sm:text-4xl font-bold text-primary-dark dark:text-primary-light mb-8 text-center">
+                <span class="border-b-2 border-primary-dark dark:border-primary-light">Profile</span>
+            </h1>
 
-    <div class="container mx-auto px-6 mt-24 w-full max-w-[50vw]">
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 mb-6 shadow-lg">
-            <div class="flex items-center gap-6">
-                <div class="relative">
-                    <img src="assets/default-song-preview.png" alt="Profile Picture"
-                        class="w-32 h-32 rounded-full object-cover border-4 border-primary-dark">
-
-                </div>
-                <div class="h-24 w-0.5 bg-amber-50 mx-3.5">&nbsp;</div>
-                <div class="flex-1 text-center md:text-left">
-                    <h2 class="text-3xl font-bold mb-2" id="username">Username</h2>
-                    <p class="text-gray-500 dark:text-gray-400 mb-4" id="userEmail">user@example.com</p>
-
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-4 sm:p-6 shadow-lg">
+                <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+                    <div class="relative">
+                        <img src="assets/default-song-preview.png" alt="Profile Picture"
+                            class="w-24 sm:w-32 h-24 sm:h-32 rounded-full object-cover border-4 border-primary-dark">
+                    </div>
+                    <div class="hidden sm:block h-24 w-0.5 bg-amber-50 mx-3.5">&nbsp;</div>
+                    <div class="flex-1 text-center sm:text-left">
+                        <h2 class="text-2xl sm:text-3xl font-bold mb-2" id="username">Username</h2>
+                        <p class="text-gray-500 dark:text-gray-400 mb-4" id="userEmail">user@example.com</p>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="mt-6 text-center">
-            <button id="logoutBtn"
-                class="bg-red-500 px-8 py-3 rounded-full hover:bg-red-600 transition text-white font-medium">
-                Logout
-            </button>
+            <div class="mt-6 text-center">
+                <button id="logoutBtn"
+                    class="bg-red-500 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full hover:bg-red-600 transition text-white font-medium text-sm sm:text-base">
+                    Logout
+                </button>
+            </div>
         </div>
     </div>
 

@@ -298,3 +298,19 @@ document.addEventListener('DOMContentLoaded', () => {
         favoritesBtn.addEventListener('click', toggleFavorites);
     }
 });
+
+// Add mobile search functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileSearchInput = document.getElementById('mobileSearchInput');
+    if (mobileSearchInput) {
+        mobileSearchInput.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredSongs = allSongs.filter(song => 
+                song.title.toLowerCase().includes(searchTerm) ||
+                song.artistName.toLowerCase().includes(searchTerm) ||
+                song.genre.toLowerCase().includes(searchTerm)
+            );
+            displaySongs(filteredSongs);
+        });
+    }
+});

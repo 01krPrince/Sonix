@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
-<body class="bg-gray-900 text-white min-h-screen">
+<body class="bg-gradient-to-b from-gray-900 to-black text-white min-h-screen">
     <nav class="bg-black/40 backdrop-blur-md fixed top-0 w-full z-50 border-b border-gray-800">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-2">
@@ -27,58 +27,50 @@
                     class="border border-purple-500 px-6 py-2 rounded-full hover:bg-purple-500/20 transition">
                     Sign Up
                 </a>
-                <a href="profile.html" id="profileBtn" class="hidden text-2xl hover:text-purple-500 transition">
-                    <i class="fas fa-user-circle"></i>
-                </a>
-                <a href="shop.html" id="shopBtn" class="hidden text-2xl hover:text-purple-500 transition ml-4">
-                    <i class="fas fa-shopping-cart"></i>
-                </a>
-                <button id="logoutBtn" class="hidden text-2xl hover:text-purple-500 transition ml-4">
-                    <i class="fas fa-sign-out-alt"></i>
-                </button>
             </div>
         </div>
     </nav>
 
-    <div class="flex items-center justify-center min-h-screen">
-        <div class="bg-gray-800 p-8 rounded-lg shadow-lg w-96 mt-16">
-            <h2 class="text-2xl font-bold mb-6 text-center">Sign Up - Sonix</h2>
-            <div id="message" class="text-center mb-4 text-sm"></div>
-            <form id="signupForm" class="space-y-4">
-                <div>
-                    <label for="username" class="block mb-1">Username</label>
-                    <input type="text" id="username" required
-                        class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none">
-                </div>
+    <div class="container mx-auto px-6 pt-24 pb-8">
+        <div class="max-w-md mx-auto">
+            <div class="bg-gray-800/50 backdrop-blur-lg p-8 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold mb-6 text-center">Create Account</h2>
+                <div id="message" class="text-center mb-4 text-sm"></div>
+                <form id="signupForm" class="space-y-4">
+                    <div>
+                        <label for="username" class="block mb-1 text-gray-300">Username</label>
+                        <input type="text" id="username" required
+                            class="w-full p-2 rounded bg-gray-700/50 text-white border border-gray-600 focus:border-purple-500 focus:outline-none">
+                    </div>
 
-                <div>
-                    <label for="email" class="block mb-1">Email</label>
-                    <input type="email" id="email" required
-                        class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none">
-                </div>
+                    <div>
+                        <label for="email" class="block mb-1 text-gray-300">Email</label>
+                        <input type="email" id="email" required
+                            class="w-full p-2 rounded bg-gray-700/50 text-white border border-gray-600 focus:border-purple-500 focus:outline-none">
+                    </div>
 
-                <div>
-                    <label for="password" class="block mb-1">Password</label>
-                    <input type="password" id="password" required
-                        class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none">
-                </div>
+                    <div>
+                        <label for="password" class="block mb-1 text-gray-300">Password</label>
+                        <input type="password" id="password" required
+                            class="w-full p-2 rounded bg-gray-700/50 text-white border border-gray-600 focus:border-purple-500 focus:outline-none">
+                    </div>
 
-                <div>
-                    <label for="confirmPassword" class="block mb-1">Confirm Password</label>
-                    <input type="password" id="confirmPassword" required
-                        class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none">
-                </div>
+                    <div>
+                        <label for="confirmPassword" class="block mb-1 text-gray-300">Confirm Password</label>
+                        <input type="password" id="confirmPassword" required
+                            class="w-full p-2 rounded bg-gray-700/50 text-white border border-gray-600 focus:border-purple-500 focus:outline-none">
+                    </div>
 
-                <button type="submit" id="signupButton"
-                    class="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600 transition duration-200">
-                    Sign Up
-                </button>
-            </form>
+                    <button type="submit" id="signupButton"
+                        class="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-2 rounded-full hover:opacity-90 transition duration-200">
+                        Sign Up
+                    </button>
+                </form>
 
-            <p class="mt-4 text-center text-gray-400">
-                Already have an account?
-                <a href="login.html" class="text-blue-500 hover:underline">Login</a>
-            </p>
+                <p class="mt-4 text-center text-gray-400">
+                    Already have an account? <a href="login.html" class="text-purple-500 hover:text-purple-400">Login</a>
+                </p>
+            </div>
         </div>
     </div>
 
