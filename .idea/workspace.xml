@@ -6,11 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="12611fb2-8a11-4419-81b8-7603b2088150" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/music-web-app/musicplayer/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/music-web-app/musicplayer/src/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/music-web-app/musicplayer/src/js/playlist.js" beforeDir="false" afterPath="$PROJECT_DIR$/music-web-app/musicplayer/src/js/playlist.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/music-web-app/musicplayer/src/js/songs.js" beforeDir="false" afterPath="$PROJECT_DIR$/music-web-app/musicplayer/src/js/songs.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/music-web-app/musicplayer/src/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/music-web-app/musicplayer/src/signup.html" afterDir="false" />
+=======
+>>>>>>> 94716e56623b84b1e5987ffd605909fe0c1990f8
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +31,7 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< HEAD
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
@@ -36,6 +40,16 @@
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/iforg/OneDrive/Desktop/Sonix/music-app-backend&quot;
+=======
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/iforg/OneDrive/Desktop/Sonix/music-app-backend"
+>>>>>>> 94716e56623b84b1e5987ffd605909fe0c1990f8
   }
 }</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
